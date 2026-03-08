@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | BlackBox Synck</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { cyber: { black: '#050505', dark: '#0a0a0a', light: '#1a1a1a', neon: '#00ff00', gray: '#888888' } },
+                    fontFamily: { orbitron: ['Orbitron', 'sans-serif'], mono: ['"JetBrains Mono"', 'monospace'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-cyber-black text-white font-mono overflow-x-hidden h-screen flex flex-col">
+
+    <nav class="w-full z-50 bg-cyber-dark border-b border-cyber-neon/20 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <svg viewBox="0 0 100 100" class="w-10 h-10 transform group-hover:scale-110 transition-transform duration-300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="topGadm" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#63B3FF"/><stop offset="100%" stop-color="#4B9CFF"/></linearGradient>
+                        <linearGradient id="leftGadm" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#3456CC"/></linearGradient>
+                        <linearGradient id="rightGadm" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#6060EE"/><stop offset="100%" stop-color="#7B55CC"/></linearGradient>
+                    </defs>
+                    <polygon points="50,10 86,30 50,50 14,30" fill="url(#topGadm)" stroke="#050505" stroke-width="3" stroke-linejoin="round"/>
+                    <polygon points="14,30 50,50 50,90 14,70" fill="url(#leftGadm)" stroke="#050505" stroke-width="3" stroke-linejoin="round"/>
+                    <polygon points="86,30 86,70 50,90 50,50" fill="url(#rightGadm)" stroke="#050505" stroke-width="3" stroke-linejoin="round"/>                    <line x1="50" y1="50" x2="50" y2="90" stroke="#000000" stroke-width="2.5"/>
+                    <line x1="50" y1="50" x2="14" y2="30" stroke="#000000" stroke-width="2.5"/>
+                    <line x1="50" y1="50" x2="86" y2="30" stroke="#000000" stroke-width="2.5"/>
+                    <line x1="50" y1="50" x2="86" y2="70" stroke="#000000" stroke-width="2.5"/>
+                </svg>
+                <div class="font-sans font-bold text-white tracking-tight leading-none text-xl flex flex-col justify-center">
+                    <span>Admin</span>
+                    <span class="leading-tight">Panel</span>
+                </div>
+            </a>
+            <div id="auth-controls" class="hidden">
+                <button id="logout-btn"
+                    class="text-sm font-bold text-red-500 hover:text-red-400 transition-colors uppercase tracking-wider">
+                    <i class="fa-solid fa-power-off mr-2"></i> Disconnect
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow flex items-center justify-center p-4 relative">
+        <canvas id="cyber-bg" class="fixed top-0 left-0 w-full h-full -z-10 opacity-20"></canvas>
+
+        <!-- Login Card -->
+        <div id="login-section"
+            class="w-full max-w-md bg-cyber-dark/80 backdrop-blur-md border border-cyber-neon/30 p-8 shadow-[0_0_30px_rgba(0,255,0,0.05)]">
+            <div class="text-center mb-8">
+                <i class="fa-solid fa-fingerprint text-4xl text-cyber-neon mb-4"></i>
+                <h2 class="text-2xl font-orbitron font-bold text-white uppercase tracking-widest">Auth Required</h2>
+                <p class="text-cyber-gray text-sm mt-2 font-mono">> Please verify identity</p>
+            </div>
+
+            <form id="login-form" class="space-y-6">
+                <div>
+                    <label class="block text-cyber-neon text-sm mb-2 font-orbitron"><i
+                            class="fa-solid fa-user-astronaut mr-2"></i> Admin ID (Email)</label>
+                    <input type="email" id="login-email" class="cyber-input" placeholder="admin@blackbox.sys" required>
+                </div>
+                <div>
+                    <label class="block text-cyber-neon text-sm mb-2 font-orbitron"><i class="fa-solid fa-key mr-2"></i>
+                        Access Key</label>
+                    <input type="password" id="login-password" class="cyber-input" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" required>
+                </div>
+
+                <div id="login-error"
+                    class="hidden text-red-500 text-sm font-bold bg-red-500/10 p-2 border border-red-500/30 text-center">
+                    > Access Denied: Invalid Credentials
+                </div>
+
+                <button type="submit" id="login-submit" class="cyber-btn primary w-full mt-4">
+                    <span class="btn-content">Authenticate</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Dashboard Card (Hidden by default) -->
+        <div id="dashboard-section"
+            class="hidden w-full max-w-5xl bg-cyber-dark/80 backdrop-blur-md border border-cyber-neon/30 p-6 md:p-8 shadow-[0_0_30px_rgba(0,255,0,0.05)] h-full lg:h-auto my-8 max-h-[90vh] overflow-y-auto">
+            <div
+                class="flex flex-col md:flex-row justify-between flex-wrap gap-4 items-center mb-8 border-b border-cyber-neon/20 pb-4">
+                <div>
+                    <h2
+                        class="text-3xl font-orbitron font-bold text-white uppercase tracking-widest flex items-center gap-3">
+                        <i class="fa-solid fa-terminal text-cyber-neon"></i> Command Center
+                    </h2>
+                    <p class="text-cyber-neon font-mono text-sm mt-1">> Access Granted: Root privileges obtained</p>
+                </div>
+                <button id="show-add-blog-btn" class="cyber-btn primary text-sm">
+                    <span class="btn-content"><i class="fa-solid fa-plus mr-2"></i> New Protocol (Blog)</span>
+                </button>
+            </div>
+
+            <!-- Blog Form (Hidden) -->
+            <div id="blog-form-section" class="hidden mb-12 border border-cyber-neon/30 p-6 bg-cyber-light/50">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 id="form-title" class="text-xl font-orbitron font-bold text-cyber-neon">Initialize New Protocol
+                    </h3>
+                    <button id="cancel-blog-btn" class="text-cyber-gray hover:text-red-500 transition-colors"><i
+                            class="fa-solid fa-xmark text-xl"></i></button>
+                </div>
+
+                <form id="blog-form" class="space-y-6">
+                    <input type="hidden" id="blog-id">
+
+                    <div>
+                        <label class="block text-white text-sm mb-2 font-orbitron">Protocol Title</label>
+                        <input type="text" id="blog-title" class="cyber-input"
+                            placeholder="e.g. Zero-Day Exploit Analysis" required>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-white text-sm mb-2 font-orbitron">Author</label>
+                            <input type="text" id="blog-author" class="cyber-input" placeholder="Operative Designation"
+                                required>
+                        </div>
+                        <div>
+                            <label class="block text-white text-sm mb-2 font-orbitron">Image URL</label>
+                            <!-- Note: Using URL string input instead of file upload for simplicity without Firebase Storage rules setup -->
+                            <input type="url" id="blog-image" class="cyber-input"
+                                placeholder="https://example.com/cyber-image.jpg" required>
+                            <p class="text-xs text-cyber-gray mt-1">Provide external image URL for header.</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-white text-sm mb-2 font-orbitron">Content Payload</label>
+                        <textarea id="blog-content" class="cyber-input h-64"
+                            placeholder="Enter full research data here..." required></textarea>
+                    </div>
+
+                    <button type="submit" id="blog-submit-btn" class="cyber-btn primary w-full md:w-auto mt-4 px-12">
+                        <span class="btn-content">Publish Protocol <i
+                                class="fa-solid fa-satellite-dish ml-2"></i></span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Blog List -->
+            <div>
+                <h3 class="text-xl font-orbitron font-bold text-white mb-6 border-l-4 border-cyber-neon pl-3">Active
+                    Protocols</h3>
+                <div id="admin-blogs-list" class="space-y-4">
+                    <div class="text-center py-8 text-cyber-gray">
+                        <i class="fa-solid fa-circle-notch fa-spin text-2xl text-cyber-neon mb-2"></i>
+                        <p class="font-mono text-sm">> retrieving data from main-frame...</p>
+                    </div>
+                    <!-- JS populated List rows here -->
+                </div>
+

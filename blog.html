@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Blog | BlackBox Synck</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { cyber: { black: '#050505', dark: '#0a0a0a', light: '#1a1a1a', neon: '#00ff00', gray: '#888888' } },
+                    fontFamily: { orbitron: ['Orbitron', 'sans-serif'], mono: ['"JetBrains Mono"', 'monospace'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-cyber-black text-white font-mono overflow-x-hidden">
+
+    <canvas id="cyber-bg" class="fixed top-0 left-0 w-full h-full -z-10 opacity-30"></canvas>
+
+    <nav
+        class="fixed w-full z-50 transition-all duration-300 backdrop-blur-md bg-cyber-dark/80 border-b border-cyber-neon/20 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <svg viewBox="0 0 100 100" class="w-10 h-10 transform group-hover:scale-110 transition-transform duration-300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="topGsf" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#63B3FF"/><stop offset="100%" stop-color="#4B9CFF"/></linearGradient>
+                                <linearGradient id="leftGsf" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#3456CC"/></linearGradient>
+                                <linearGradient id="rightGsf" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#6060EE"/><stop offset="100%" stop-color="#7B55CC"/></linearGradient>
+                            </defs>
+                            <polygon points="50,10 86,30 50,50 14,30" fill="url(#topGsf)" stroke="#050505" stroke-width="3" stroke-linejoin="round"/>
+                            <polygon points="14,30 50,50 50,90 14,70" fill="url(#leftGsf)" stroke="#050505" stroke-width="3" stroke-linejoin="round"/>
+                            <polygon points="86,30 86,70 50,90 50,50" fill="url(#rightGsf)" stroke="#050505" stroke-width="3" stroke-linejoin="round"/>
+                    <line x1="50" y1="50" x2="50" y2="90" stroke="#000000" stroke-width="2.5"/>
+                    <line x1="50" y1="50" x2="14" y2="30" stroke="#000000" stroke-width="2.5"/>
+                    <line x1="50" y1="50" x2="86" y2="30" stroke="#000000" stroke-width="2.5"/>
+                    <line x1="50" y1="50" x2="86" y2="70" stroke="#000000" stroke-width="2.5"/>                        </svg>
+                        <div class="font-sans font-bold text-white tracking-tight leading-none text-xl flex flex-col justify-center">
+                            <span>BlackBox</span>
+                            <span class="leading-tight">Synck</span>
+                        </div>
+            </a>
+            <button id="mobile-menu-btn" class="md:hidden text-cyber-neon focus:outline-none"><i
+                    class="fa-solid fa-bars text-2xl"></i></button>
+            <ul class="hidden md:flex space-x-8 text-sm uppercase tracking-widest font-bold">
+                <li><a href="index.html" class="hover:text-cyber-neon transition-colors duration-300">Home</a></li>
+                <li><a href="services.html" class="hover:text-cyber-neon transition-colors duration-300">Services</a>
+                </li>
+                <li><a href="about.html" class="hover:text-cyber-neon transition-colors duration-300">About</a></li>
+                <li><a href="blog.html"
+                        class="hover:text-cyber-neon transition-colors duration-300 text-cyber-neon">Blog</a></li>
+                <li><a href="contact.html" class="hover:text-cyber-neon transition-colors duration-300">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-cyber-black/95 z-40 hidden flex-col items-center justify-center space-y-8 text-xl font-orbitron uppercase border-b-4 border-cyber-neon">
+        <a href="index.html" class="hover:text-cyber-neon transition-colors">Home</a>
+        <a href="services.html" class="hover:text-cyber-neon transition-colors">Services</a>
+        <a href="about.html" class="hover:text-cyber-neon transition-colors">About</a>
+        <a href="blog.html" class="text-cyber-neon hover:text-white transition-colors">Blog</a>
+        <a href="contact.html" class="hover:text-cyber-neon transition-colors">Contact</a>
+    </div>
+
+    <!-- Page Header -->
+    <header class="pt-32 pb-16 px-4 border-b border-cyber-neon/10 bg-cyber-dark/50 backdrop-blur-sm relative">
+        <div class="container mx-auto text-center relative z-10">
+            <h1 class="text-4xl md:text-6xl font-orbitron font-black text-white mb-4 glitch"
+                data-text="Security Research">Security Research</h1>
+            <p class="text-cyber-neon font-mono text-lg max-w-2xl mx-auto">> latest intel & vulnerability disclosures
+            </p>
+        </div>
+    </header>
+
+    <!-- Blog Section -->
+    <section class="py-24 px-4 relative z-10 min-h-[50vh]">
+        <div class="container mx-auto">
+
+            <div id="loading-spinner" class="text-center py-12">
+                <i class="fa-solid fa-circle-notch fa-spin text-4xl text-cyber-neon mb-4"></i>
+                <p class="text-cyber-neon font-mono text-sm">> establishing database link...</p>
+            </div>
+
+            <div id="blogs-container" class="grid lg:grid-cols-3 md:grid-cols-2 gap-8 hidden">
+                <!-- Blog Cards Will Be Rendered Here via JS -->
+            </div>
+
+            <div id="error-message"
+                class="hidden text-center py-12 border border-red-500/30 bg-red-500/10 max-w-2xl mx-auto">
+                <i class="fa-solid fa-triangle-exclamation text-4xl text-red-500 mb-4"></i>
+                <p class="text-red-500 font-mono text-sm mb-2">> ERROR: Failed to retrieve data</p>
+                <p class="text-cyber-gray text-xs">Ensure Firebase config is set up in js/firebase-config.js</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-cyber-dark pt-16 pb-8 border-t border-cyber-neon/20 px-4 mt-auto relative z-10">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <a href="index.html" class="flex items-center gap-3 mb-4 group">
+                        <svg viewBox="0 0 100 100" class="w-10 h-10 transform group-hover:scale-110 transition-transform duration-300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="topGsf" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#63B3FF"/><stop offset="100%" stop-color="#4B9CFF"/></linearGradient>
+                                <linearGradient id="leftGsf" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#3456CC"/></linearGradient>
+                                <linearGradient id="rightGsf" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#6060EE"/><stop offset="100%" stop-color="#7B55CC"/></linearGradient>
+                            </defs>
+                            <polygon points="50,10 86,30 50,50 14,30" fill="url(#topGsf)" stroke="#050505" stroke-width="3" stroke-linejoin="round"/>
+                            <polygon points="14,30 50,50 50,90 14,70" fill="url(#leftGsf)" stroke="#050505" stroke-width="3" stroke-linejoin="round"/>
+                            <polygon points="86,30 86,70 50,90 50,50" fill="url(#rightGsf)" stroke="#050505" stroke-width="3" stroke-linejoin="round"/>
+                    <line x1="50" y1="50" x2="50" y2="90" stroke="#000000" stroke-width="2.5"/>
+                    <line x1="50" y1="50" x2="14" y2="30" stroke="#000000" stroke-width="2.5"/>
+                    <line x1="50" y1="50" x2="86" y2="30" stroke="#000000" stroke-width="2.5"/>
+                    <line x1="50" y1="50" x2="86" y2="70" stroke="#000000" stroke-width="2.5"/>                        </svg>
+                        <div class="font-sans font-bold text-white tracking-tight leading-none text-xl flex flex-col justify-center">
+                            <span>BlackBox</span>
+                            <span class="leading-tight">Synck</span>
+                        </div>
+                    </a>
+                    <p class="text-cyber-gray text-sm max-w-sm mb-6">
+                        An offensive security focused cybersecurity company helping startups secure their infrastructure
+                        from advanced persistent threats.
+                    </p>
+                </div>
+                <div>
+                    <h4
+                        class="font-orbitron font-bold text-white mb-4 uppercase tracking-widest border-l-2 border-cyber-neon pl-2">
+                        Links</h4>
+                    <ul class="space-y-2 text-sm text-cyber-gray">
+                        <li><a href="services.html" class="hover:text-cyber-neon">> Services</a></li>
+                        <li><a href="about.html" class="hover:text-cyber-neon">> About Us</a></li>
+                        <li><a href="blog.html" class="text-cyber-neon">> Blog</a></li>
+                        <li><a href="contact.html" class="hover:text-cyber-neon">> Contact</a></li>
+                        <li><a href="admin.html" class="hover:text-cyber-neon">> Admin Login</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4
+                        class="font-orbitron font-bold text-white mb-4 uppercase tracking-widest border-l-2 border-cyber-neon pl-2">
+                        Contact</h4>
+                    <ul class="space-y-2 text-sm text-cyber-gray">
+                        <li><i class="fa-solid fa-envelope text-cyber-neon mr-2"></i> info@blackboxsynck.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-cyber-neon/10 pt-8 mt-8 flex justify-between text-xs text-cyber-gray">
+                <p>&copy; 2026 BlackBox Synck.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/main.js"></script>
+    <!-- Firebase Logic specific to Blog page -->
+    <script type="module" src="js/blog.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+
