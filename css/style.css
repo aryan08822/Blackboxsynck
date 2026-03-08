@@ -1,0 +1,187 @@
+/* Custom CSS for BlackBox Synck */
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #050505;
+}
+::-webkit-scrollbar-thumb {
+    background: #00ff00;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #00cc00;
+}
+
+/* Base Styles */
+body {
+    scroll-behavior: smooth;
+    background-color: #050505;
+}
+
+/* Selection */
+::selection {
+    background: rgba(0, 255, 0, 0.3);
+    color: #ffffff;
+}
+
+/* Cyber Button */
+.cyber-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 2rem;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid;
+    z-index: 1;
+}
+
+.cyber-btn.primary {
+    color: #050505;
+    background-color: #00ff00;
+    border-color: #00ff00;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
+}
+
+.cyber-btn.primary:hover {
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.8);
+    transform: translateY(-2px);
+}
+
+.cyber-btn.secondary {
+    color: #00ff00;
+    background-color: transparent;
+    border-color: #00ff00;
+}
+
+.cyber-btn.secondary:hover {
+    background-color: rgba(0, 255, 0, 0.1);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3) inset;
+    transform: translateY(-2px);
+}
+
+.cyber-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+    z-index: -1;
+}
+
+.cyber-btn:hover::before {
+    left: 100%;
+}
+
+/* Glitch Effect on Text */
+.glitch {
+    position: relative;
+    color: white;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -1px 0 rgba(255, 0, 0, 0.7);
+    clip: rect(24px, 550px, 90px, 0);
+    animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: 2px 0 rgba(0, 0, 255, 0.7);
+    clip: rect(85px, 550px, 140px, 0);
+    animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+    0% { clip: rect(20px, 9999px, 83px, 0); }
+    20% { clip: rect(61px, 9999px, 24px, 0); }
+    40% { clip: rect(14px, 9999px, 99px, 0); }
+    60% { clip: rect(38px, 9999px, 15px, 0); }
+    80% { clip: rect(88px, 9999px, 34px, 0); }
+    100% { clip: rect(96px, 9999px, 60px, 0); }
+}
+
+@keyframes glitch-anim-2 {
+    0% { clip: rect(65px, 9999px, 100px, 0); }
+    20% { clip: rect(13px, 9999px, 85px, 0); }
+    40% { clip: rect(84px, 9999px, 23px, 0); }
+    60% { clip: rect(29px, 9999px, 65px, 0); }
+    80% { clip: rect(98px, 9999px, 12px, 0); }
+    100% { clip: rect(34px, 9999px, 25px, 0); }
+}
+
+/* Border Outline Text */
+.border-text {
+    -webkit-text-stroke: 1px #00ff00;
+}
+
+/* Terminal Typing Cursor */
+.cursor {
+    display: inline-block;
+    width: 10px;
+    height: 1.2em;
+    background-color: #00ff00;
+    vertical-align: bottom;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Service Card Hover */
+.service-card {
+    will-change: transform, box-shadow;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 255, 0, 0.15);
+    border-color: rgba(0, 255, 0, 0.5);
+}
+
+/* Input Fields Cyber Style */
+.cyber-input {
+    width: 100%;
+    background: rgba(10, 10, 10, 0.8);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    color: #00ff00;
+    padding: 0.75rem 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.cyber-input:focus {
+    border-color: #00ff00;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+    background: rgba(10, 10, 10, 1);
+}
+
+.cyber-input::placeholder {
+    color: rgba(136, 136, 136, 0.5);
+}
